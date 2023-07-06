@@ -1,0 +1,25 @@
+#include <16LF158.h>
+#device ADC=10
+#use delay(internal=8MHz)
+
+#define LED_PIN PIN_C5
+#define POT_PIN PIN_A0
+
+void main()
+{
+   int16 deger;
+   setup_adc_ports(pin_a0);
+   setup_adc(ADC_CLOCK_INTERNAL);
+   setup_ccp1(CCP_PWM);
+   setup_timer_2(T2_DIV_BY_16, 255, 1);
+   set_pwm1_duty(0);
+
+   while (true)
+   {
+      set_adc_channel(0);
+      delay_us(10);
+      deger = read_adc();
+      set_pwm1_duty(deger);
+      delay_ms(10);
+   }
+}

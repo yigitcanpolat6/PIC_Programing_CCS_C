@@ -1,0 +1,175 @@
+CCS PCM C Compiler, Version 5.007, 61971               02-Tem-23 18:48
+
+               Filename:   C:\Users\Yigit Can POLAT\Desktop\pýc\adsa\main.lst
+
+               ROM used:   129 words (3%)
+                           Largest free fragment is 2048
+               RAM used:   6 (2%) at main() level
+                           18 (7%) worst case
+               Stack used: 0 locations
+               Stack size: 16
+
+*
+0000:  MOVLP  00
+0001:  GOTO   01A
+0002:  NOP
+.................... #include <16F1828.h> 
+.................... //////// Standard Header file for the PIC16F1828 device //////////////// 
+.................... #device PIC16F1828 
+....................  
+.................... #list 
+....................  
+.................... #device ADC=10 
+.................... #use delay(internal=16MHz) 
+0003:  MOVLW  20
+0004:  MOVWF  05
+0005:  MOVLW  03
+0006:  MOVWF  04
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  05
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  2E
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  MOVLP  00
+0019:  GOTO   07E (RETURN)
+....................  
+.................... #define LED_PIN PIN_C5 
+.................... #define POT_PIN PIN_A0 
+....................  
+.................... void main() 
+001A:  MOVLW  7A
+001B:  MOVLB  01
+001C:  MOVWF  19
+001D:  MOVLB  03
+001E:  CLRF   0C
+001F:  CLRF   0D
+0020:  CLRF   0E
+0021:  MOVLB  02
+0022:  CLRF   12
+0023:  CLRF   11
+0024:  CLRF   14
+0025:  CLRF   13
+.................... { 
+....................    int16 deger; 
+....................    setup_adc_ports(pin_a0); 
+0026:  MOVLB  01
+0027:  BCF    1E.0
+0028:  BCF    1E.1
+0029:  BCF    1E.2
+002A:  MOVLW  00
+002B:  MOVLB  03
+002C:  MOVWF  0C
+002D:  MOVWF  0E
+002E:  MOVLW  60
+002F:  MOVWF  0D
+....................    setup_adc(ADC_CLOCK_INTERNAL); 
+0030:  MOVLB  01
+0031:  BSF    1E.4
+0032:  BSF    1E.5
+0033:  BCF    1E.6
+0034:  BSF    1E.7
+0035:  BSF    1D.0
+....................    setup_ccp1(CCP_PWM); 
+0036:  MOVLB  02
+0037:  BCF    1E.2
+0038:  BCF    1E.3
+0039:  MOVLB  01
+003A:  BCF    0E.5
+003B:  MOVLB  02
+003C:  BCF    0E.5
+003D:  MOVLW  0C
+003E:  MOVLB  05
+003F:  MOVWF  13
+0040:  CLRF   14
+0041:  CLRF   15
+0042:  BCF    1E.0
+0043:  BCF    1E.1
+0044:  MOVLW  01
+0045:  MOVWF  16
+....................    setup_timer_2(T2_DIV_BY_16, 255, 1); 
+0046:  MOVLW  00
+0047:  MOVWF  78
+0048:  IORLW  06
+0049:  MOVLB  00
+004A:  MOVWF  1C
+004B:  MOVLW  FF
+004C:  MOVWF  1B
+....................    set_pwm1_duty(0); 
+004D:  MOVLB  05
+004E:  CLRF   11
+....................  
+....................    while (true) 
+....................    { 
+....................       set_adc_channel(0); 
+004F:  MOVLW  00
+0050:  MOVWF  78
+0051:  MOVLB  01
+0052:  MOVF   1D,W
+0053:  ANDLW  83
+0054:  IORWF  78,W
+0055:  MOVWF  1D
+....................       delay_us(10); 
+0056:  MOVLW  0C
+0057:  MOVWF  77
+0058:  DECFSZ 77,F
+0059:  GOTO   058
+005A:  GOTO   05B
+005B:  NOP
+....................       deger = read_adc(); 
+005C:  BSF    1D.1
+005D:  BTFSC  1D.1
+005E:  GOTO   05D
+005F:  MOVF   1C,W
+0060:  MOVWF  7A
+0061:  MOVF   1B,W
+0062:  MOVLB  00
+0063:  MOVWF  21
+0064:  MOVF   7A,W
+0065:  MOVWF  22
+....................       set_pwm1_duty(deger); 
+0066:  MOVF   22,W
+0067:  MOVWF  79
+0068:  MOVF   21,W
+0069:  MOVWF  78
+006A:  RRF    79,F
+006B:  RRF    78,F
+006C:  RRF    79,F
+006D:  RRF    78,F
+006E:  RRF    79,F
+006F:  MOVF   78,W
+0070:  MOVLB  05
+0071:  MOVWF  11
+0072:  RRF    79,F
+0073:  RRF    79,W
+0074:  ANDLW  30
+0075:  MOVWF  77
+0076:  MOVF   13,W
+0077:  ANDLW  CF
+0078:  IORWF  77,W
+0079:  MOVWF  13
+....................       delay_ms(10); 
+007A:  MOVLW  0A
+007B:  MOVLB  00
+007C:  MOVWF  23
+007D:  GOTO   003
+007E:  MOVLB  05
+007F:  GOTO   04F
+....................    } 
+.................... } 
+0080:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3FC4   INTRC_IO NOWDT PUT MCLR NOPROTECT NOCPD BROWNOUT NOCLKOUT IESO FCMEN
+   Word  2: 1EFF   NOWRT PLL_SW STVREN BORV19 NODEBUG NOLVP

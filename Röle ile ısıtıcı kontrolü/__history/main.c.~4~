@@ -1,0 +1,38 @@
+#include <16F1828.h>
+
+#fuses NOMCLR, INTRC_IO
+
+#use delay(internal=8MHz)
+
+
+#define LED_PIN PIN_C2
+
+#define POT_PIN PIN_A0
+
+
+void main()
+
+{
+   int16 deger;
+
+setup_adc_ports(pin_a0);
+
+setup_adc(ADC_CLOCK_INTERNAL);
+
+setup_ccp1(CCP_PWM);
+  
+setup_timer_2(T2_DIV_BY_16, 255, 1);
+ 
+
+   while (1)
+   
+{
+      deger = read_adc();
+   
+set_pwm1_duty(deger);
+    
+delay_ms(10);
+  
+}
+
+}
